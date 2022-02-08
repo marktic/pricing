@@ -1,0 +1,46 @@
+{
+  "name": "marktic/pricing",
+  "type": "library",
+  "license": "MIT",
+  "description": "pricing base objects",
+  "keywords": [],
+  "homepage": "https://github.com/marktic/pricing",
+  "authors": [
+    {
+      "name": "Gabriel Solomon",
+      "email": "hello@gabrielsolomon.ro"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Marktic\\Pricing\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Marktic\\Pricing\\Tests\\": "tests/src",
+      "Marktic\\Pricing\\Tests\\Fixtures\\": "tests/fixtures"
+    }
+  },
+  "require": {
+    "ext-json": "*",
+    "bytic/package-base": "^1.0",
+    "bytic/admin-base": "^1.0",
+    "bytic/console": "^1.0",
+    "bytic/controllers": "^1.0",
+    "bytic/controllers-extra": "^1.0",
+    "bytic/event-dispatcher": "^1.0",
+    "bytic/form": "^1.0",
+    "bytic/orm": "^0.9|^1.0",
+    "bytic/orm-filters": "^0.9|^1.0",
+    "bytic/orm-behaviors": "^0.9|^1.0",
+    "bytic/translation": "^0.9|^1.0",
+    "bytic/models-smart-properties": "^1.0",
+    "bytic/migrations": "^0.12"
+  },
+  "require-dev": {
+    "bytic/phpqatools": "^1.0"
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
