@@ -31,6 +31,7 @@
     "bytic/controllers-extra": "^1.0",
     "bytic/event-dispatcher": "^1.0",
     "bytic/form": "^1.0",
+    "bytic/money": "^1.0",
     "bytic/orm": "^0.9|^1.0",
     "bytic/orm-filters": "^0.9|^1.0",
     "bytic/orm-behaviors": "^0.9|^1.0",

@@ -1,11 +1,12 @@
 <?php
 
-namespace Marktic\Pricing\PriceAdjustable\Models\Traits;
+namespace Marktic\Pricing\Base\Models\Behaviours\HasSaleable;
 
 use Marktic\Pricing\Utility\PricingModels;
 
-trait RepositoryHasPriceAdjustments
+trait RepositoryHasSaleable
 {
+
     protected function initRelations()
     {
         parent::initRelations();
@@ -14,13 +15,13 @@ trait RepositoryHasPriceAdjustments
 
     protected function initRelationsPricing()
     {
-        $this->initRelationsPricingAdjustments();
+        $this->initRelationsPricingSaleable();
     }
 
-    protected function initRelationsPricingAdjustments()
+    protected function initRelationsPricingSaleable()
     {
         $this->morphMany(
-            'PriceAdjustments',
+            'Saleable',
             ['class' => get_class(PricingModels::adjustments()), 'morphPrefix' => 'saleable', 'morphTypeField' => 'saleable']
         );
     }

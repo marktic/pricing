@@ -2,13 +2,13 @@
 
 namespace Marktic\Pricing\PriceAdjustments\Models;
 
-use Marktic\Pricing\Base\Models\Behaviours\HasBuyable\RepositoryHasBuyable;
+use Marktic\Pricing\Base\Models\Behaviours\HasSaleable\RepositoryHasSaleable;
 use Marktic\Pricing\Utility\PackageConfig;
 use Marktic\Pricing\Utility\PricingModels;
 
 trait PriceAdjustmentsTrait
 {
-    use RepositoryHasBuyable;
+    use RepositoryHasSaleable;
 
     protected function initRelations()
     {

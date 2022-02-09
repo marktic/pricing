@@ -9,13 +9,13 @@ use Nip\Records\Record;
  * Class PriceAdjustment
  * @package Marktic\Pricing\PriceAdjustments\Models
  */
-class PriceAdjustment extends Record
+class PriceAdjustment extends Record implements \Marktic\Pricing\PriceAdjustments\Contracts\PriceAdjustment
 {
     use PriceAdjustmentTrait;
     use CommonRecordTrait;
 
     public function getRegistry()
     {
-        // TODO: Implement getRegistry() method.
     }
+
 }

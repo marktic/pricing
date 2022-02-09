@@ -16,6 +16,8 @@ class PackageConfig extends \ByTIC\PackageBase\Utility\PackageConfig
 
     protected $name = PricingServiceProvider::NAME;
 
+    public const DEFAULT_CURRENCY = 'EUR';
+
     public static function configPath(): string
     {
         return __DIR__ . '/../../config/mkt_promotion.php';
@@ -28,6 +30,7 @@ class PackageConfig extends \ByTIC\PackageBase\Utility\PackageConfig
 
     public static function defaultCurrencyCode($default = null)
     {
+        $default = $default ?: static::DEFAULT_CURRENCY;
         return static::instance()->get('currencies.default', $default);
     }
 

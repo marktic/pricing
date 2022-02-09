@@ -19,12 +19,15 @@ final class MktPricingAdjustments extends AbstractMigration
         $table = $this->table($table_name);
         $table
             ->addColumn('type', 'string', ['null' => false])
-            ->addColumn('buyable_type', 'string', ['null' => true])
-            ->addColumn('buyable_id', 'integer', ['null' => true])
+            ->addColumn('label', 'string', ['null' => false])
+            ->addColumn('currency_code', 'string', ['limit' => '3', 'null' => false])
+            ->addColumn('saleable_type', 'string', ['null' => true])
+            ->addColumn('saleable_id', 'integer', ['null' => true])
             ->addColumn('trigger_type', 'string', ['null' => true])
             ->addColumn('trigger_id', 'integer', ['null' => true])
-            ->addColumn('amount', 'decimal', ['precision' => '2', 'scale' => '10', 'null' => false])
-            ->addColumn('currency_code', 'string', ['limit' => '3', 'null' => false])
+            ->addColumn('trigger_code', 'string', ['null' => true])
+            ->addColumn('modification', 'string', ['null' => false])
+            ->addColumn('value', 'decimal', ['precision' => '2', 'scale' => '10', 'null' => false])
             ->addColumn('configuration', 'json', ['null' => true])
             ->addColumn('updated_at', 'timestamp', [
                 'default' => 'CURRENT_TIMESTAMP',
@@ -36,16 +39,12 @@ final class MktPricingAdjustments extends AbstractMigration
             ->save();
 
         $table
-            ->addIndex(['promotion_id'])
-            ->save();
-
-        $table
-            ->addForeignKey(
-                'promotion_id',
-                'mkt_promotions',
-                'id',
-                ['constraint' => 'mkt_promotions_rules_promotion_id', 'delete' => 'NO_ACTION', 'update' => 'NO_ACTION']
-            )
+            ->addIndex(['type'])
+            ->addIndex(['buyable_type'])
+            ->addIndex(['buyable_id'])
+            ->addIndex(['trigger_type'])
+            ->addIndex(['trigger_id'])
+            ->addIndex(['trigger_code'])
             ->save();
     }
 }

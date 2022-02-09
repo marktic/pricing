@@ -1,6 +1,7 @@
 <?php
 
 use Marktic\Pricing\PriceAdjustments\Models\PriceAdjustments;
+use Marktic\Pricing\Utility\PackageConfig;
 use Marktic\Pricing\Utility\PricingModels;
 
 return [
@@ -11,7 +12,7 @@ return [
         PricingModels::PRICING_ADJUSTMENTS => PriceAdjustments::TABLE,
     ],
     'currencies' => [
-        'default' => 'EUR',
+        'default' => PackageConfig::DEFAULT_CURRENCY,
     ],
     'database' => [
         'connection' => 'main',
