@@ -20,7 +20,7 @@ class PackageConfig extends \ByTIC\PackageBase\Utility\PackageConfig
 
     public static function configPath(): string
     {
-        return __DIR__ . '/../../config/mkt_promotion.php';
+        return __DIR__ . '/../../config/mkt_pricing.php';
     }
 
     public static function tableName($name, $default = null)
@@ -32,11 +32,6 @@ class PackageConfig extends \ByTIC\PackageBase\Utility\PackageConfig
     {
         $default = $default ?: static::DEFAULT_CURRENCY;
         return static::instance()->get('currencies.default', $default);
-    }
-
-    public static function rulesCondition($default = [])
-    {
-        return static::instance()->get('rules.conditions', $default);
     }
 
     /**

@@ -13,11 +13,26 @@ trait RecordHasConfiguration
         return $this->getPropertyValue('configuration');
     }
 
-    public function getConfigurationWithCurrency($name, $currency = null, $default = null)
+    public function getConfigWithCurrency($name, $currency = null, $default = null)
     {
         $configuration = $this->getConfiguration();
         $currency = $currency ?: $this->getCurrencyCode();
+
         return $configuration->getWithCurrency($name, $currency, $default);
+    }
+
+    public function checkConfigWithCurrencyCheck($name, $currency = null, $default = null)
+    {
+        return $this->getConfigWithCurrency(
+            'amount',
+            $currency,
+            function () use ($currency, $default, $name) {
+                $default = value($default);
+                $this->setConfigurationWithCurrency($name, $default, $currency);
+
+                return $default;
+            }
+        );
     }
 
     public function setConfigurationWithCurrency($name, $value, $currency = null)
@@ -50,7 +65,7 @@ trait RecordHasConfiguration
     protected function bootRecordHasConfiguration()
     {
         $this->casts = array_merge($this->casts, [
-            'configuration' => AsMetadataObject::class . ':json,' . ModelConfiguration::class,
+            'configuration' => AsMetadataObject::class.':json,'.ModelConfiguration::class,
         ]);
     }
 }

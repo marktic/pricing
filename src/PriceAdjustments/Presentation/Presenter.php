@@ -29,7 +29,11 @@ class Presenter
 
     public function reductionSign(): string
     {
-        return $this->adjustment->getReductionAmount() > 0 ? '+' : '-';
+        if ($this->adjustment->getType() === PriceAdjustment::TYPE_DISCOUNT) {
+            return '-';
+        }
+
+        return '+';
     }
 
     public function reductionFormatted($currency = null): string

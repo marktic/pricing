@@ -27,7 +27,7 @@ final class MktPricingAdjustments extends AbstractMigration
             ->addColumn('trigger_id', 'integer', ['null' => true])
             ->addColumn('trigger_code', 'string', ['null' => true])
             ->addColumn('modification', 'string', ['null' => false])
-            ->addColumn('value', 'decimal', ['precision' => '2', 'scale' => '10', 'null' => false])
+            ->addColumn('value', 'decimal', ['precision' => '10', 'scale' => '2', 'null' => false])
             ->addColumn('configuration', 'json', ['null' => true])
             ->addColumn('updated_at', 'timestamp', [
                 'default' => 'CURRENT_TIMESTAMP',
@@ -40,8 +40,8 @@ final class MktPricingAdjustments extends AbstractMigration
 
         $table
             ->addIndex(['type'])
-            ->addIndex(['buyable_type'])
-            ->addIndex(['buyable_id'])
+            ->addIndex(['saleable_type'])
+            ->addIndex(['saleable_id'])
             ->addIndex(['trigger_type'])
             ->addIndex(['trigger_id'])
             ->addIndex(['trigger_code'])

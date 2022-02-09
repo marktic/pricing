@@ -5,7 +5,7 @@ namespace Marktic\Pricing\PriceAdjustments\Models;
 use ByTIC\Money\Money;
 use Marktic\Pricing\Base\Models\Behaviours\HasSaleable\RecordHasSaleable;
 use Marktic\Pricing\Base\Models\Behaviours\HasConfiguration\RecordHasConfiguration;
-use Marktic\Pricing\PriceAdjustments\Calculator\Calculator;
+use Marktic\Pricing\PriceAdjustments\Calculator\ReductionCalculator;
 use Marktic\Pricing\PriceAdjustments\Contracts\PriceAdjustment as PriceAdjustmentContract;
 use Marktic\Pricing\PriceAdjustments\Presentation\Presenter;
 use Marktic\Pricing\Saleable\Contracts\SaleableInterface;
@@ -15,7 +15,7 @@ trait PriceAdjustmentTrait
     use RecordHasSaleable;
     use RecordHasConfiguration;
 
-    protected ?string $type;
+    protected ?string $type = PriceAdjustmentContract::TYPE_DISCOUNT;
     protected ?string $label;
     protected ?float $amount;
     protected ?string $modification = null;
@@ -43,7 +43,12 @@ trait PriceAdjustmentTrait
      */
     public function getLabel(): ?string
     {
-        return $this->label;
+        return $this->label ?? $this->generateLabel();
+    }
+
+    protected function generateLabel(): ?string
+    {
+        return null;
     }
 
     /**
@@ -51,17 +56,17 @@ trait PriceAdjustmentTrait
      */
     public function getValue($currency = null): ?float
     {
-        return $this->getConfigurationWithCurrency('value', $currency, $this->getPropertyRaw('value'));
+        return $this->getConfigWithCurrency('value', $currency, $this->getPropertyRaw('value'));
     }
 
-    public function modifyPlus(): self
+    public function modifyAmount(): self
     {
-        return $this->withModification(PriceAdjustmentContract::MODIFICATION_PLUS);
+        return $this->withModification(PriceAdjustmentContract::MODIFICATION_AMOUNT);
     }
 
-    public function modifyMinus(): self
+    public function modifyPercentage(): self
     {
-        return $this->withModification(PriceAdjustmentContract::MODIFICATION_MINUS);
+        return $this->withModification(PriceAdjustmentContract::MODIFICATION_PERCENTAGE);
     }
 
     public function withModification(string $modification): self
@@ -76,16 +81,19 @@ trait PriceAdjustmentTrait
         return $this->modification;
     }
 
-    public function adjustPrice($currency = null)
+    public function adjustedPrice($currency = null): float
     {
         $price = $this->getSealablePrice($currency);
-        $price = $price + $this->getReductionAmount($currency);
+        if ($this->getType() === PriceAdjustmentContract::TYPE_DISCOUNT) {
+            $price = $price - $this->getAdjustableAmount($currency);
+        }
+
         return $price;
     }
 
     public function isFullDiscount(): bool
     {
-        return $this->adjustPrice() === 0;
+        return $this->adjustedPrice() === 0;
     }
 
     public function present(): Presenter
@@ -98,28 +106,32 @@ trait PriceAdjustmentTrait
         $currency = $currency ?? $this->getCurrencyCode();
 
         if (!isset($this->reductions[$currency])) {
-            $this->reductions[$currency] = \ByTIC\Money\Utility\Money::fromFloat($this->getReductionAmount($currency), $currency);
+            $this->reductions[$currency] = \ByTIC\Money\Utility\Money::fromFloat(
+                $this->getAdjustableAmount($currency),
+                $currency
+            );
         }
+
         return $this->reductions[$currency];
     }
 
     /**
-     * Determines the discount amount from the given $currency
+     * Determines the amount that will be adjusted for the given $currency
      *
      * @param float $price The base price before discount
      * @return float The discount amount
      */
-    public function getReductionAmount($currency = null): float
+    public function getAdjustableAmount($currency = null): float
     {
         $currency = $currency ?? $this->getCurrencyCode();
 
-        return $this->getConfigurationWithCurrency('amount', $currency)
-            ?? value(function () use ($currency) {
-                $amount = $this->calculateReductionFor($this->getSealablePrice($currency));
-                $this->setConfigurationWithCurrency('amount', $currency, $amount);
-
-                return $amount;
-            });
+        return $this->checkConfigWithCurrencyCheck(
+            'amount',
+            $currency,
+            function () use ($currency) {
+                return $this->calculateReductionFor($this->getSealablePrice($currency));
+            }
+        );
     }
 
     protected function getSealablePrice($currency = null): float
@@ -137,6 +149,6 @@ trait PriceAdjustmentTrait
      */
     protected function calculateReductionFor($price, $currency = null)
     {
-        return Calculator::for($price, $this, $currency);
+        return ReductionCalculator::for($price, $this, $currency);
     }
 }

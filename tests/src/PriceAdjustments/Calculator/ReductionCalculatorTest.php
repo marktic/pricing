@@ -2,12 +2,12 @@
 
 namespace Marktic\Pricing\Tests\PriceAdjustments\Calculator;
 
-use Marktic\Pricing\PriceAdjustments\Calculator\Calculator;
+use Marktic\Pricing\PriceAdjustments\Calculator\ReductionCalculator;
 use Marktic\Pricing\PriceAdjustments\Contracts\PriceAdjustment as PriceAdjustmentContract;
 use Marktic\Pricing\PriceAdjustments\Models\PriceAdjustment;
 use Marktic\Pricing\Tests\AbstractTest;
 
-class CalculatorTest extends AbstractTest
+class ReductionCalculatorTest extends AbstractTest
 {
     /**
      * @dataProvider data_for
@@ -20,18 +20,17 @@ class CalculatorTest extends AbstractTest
             'value' => $value,
         ]);
 
-        self::assertEquals($expected, Calculator::for(100, $adjustment));
+        self::assertEquals($expected, ReductionCalculator::for(100, $adjustment));
     }
 
     public function data_for()
     {
         return [
-            [10, PriceAdjustmentContract::MODIFICATION_MINIMUM, -90],
-            [110, PriceAdjustmentContract::MODIFICATION_MINIMUM, 0],
-            [10, PriceAdjustmentContract::MODIFICATION_MINUS, -10],
-            [10, PriceAdjustmentContract::MODIFICATION_PLUS, 10],
-            [10, PriceAdjustmentContract::MODIFICATION_PERCENT_MINUS, -10],
-            [10, PriceAdjustmentContract::MODIFICATION_PERCENT_PLUS, 10],
+            [10, PriceAdjustmentContract::MODIFICATION_FIXED, 90],
+            [110, PriceAdjustmentContract::MODIFICATION_FIXED, 0],
+            [10, PriceAdjustmentContract::MODIFICATION_AMOUNT, 10],
+            [10, PriceAdjustmentContract::MODIFICATION_PERCENTAGE, 10],
+            [20, PriceAdjustmentContract::MODIFICATION_PERCENTAGE, 20],
         ];
     }
 }
