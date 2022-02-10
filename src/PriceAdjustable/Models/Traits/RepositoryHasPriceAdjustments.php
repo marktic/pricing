@@ -21,7 +21,7 @@ trait RepositoryHasPriceAdjustments
     {
         $this->morphMany(
             'PriceAdjustments',
-            ['class' => get_class(PricingModels::adjustments()), 'morphPrefix' => 'saleable', 'morphTypeField' => 'saleable']
+            ['class' => get_class(PricingModels::adjustments()), 'morphPrefix' => 'saleable']
         );
     }
 }

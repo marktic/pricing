@@ -13,12 +13,21 @@ trait PriceAdjustmentsTrait
     protected function initRelations()
     {
         parent::initRelations();
-        $this->initRelationsTrait();
+        $this->initRelationsPricing();
     }
 
-    protected function initRelationsTrait()
+    protected function initRelationsPricing()
     {
-        $this->initRelationsPromotion();
+        $this->initRelationsPricingSaleable();
+        $this->initRelationsPricingTrigger();
+    }
+
+    protected function initRelationsPricingTrigger()
+    {
+        $this->morphTo(
+            'PricingTrigger',
+            ['morphPrefix' => 'trigger']
+        );
     }
 
     protected function generateTable(): string

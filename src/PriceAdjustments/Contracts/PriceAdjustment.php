@@ -15,6 +15,6 @@ interface PriceAdjustment
 
     public const MODIFICATION_AMOUNT = 'amount';
     public const MODIFICATION_PERCENTAGE = 'percentage';
-    public const MODIFICATION_FIXED = 'FIXED';
+    public const MODIFICATION_FIXED = 'fixed';
 
 }

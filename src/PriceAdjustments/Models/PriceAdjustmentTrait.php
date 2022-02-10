@@ -9,7 +9,11 @@ use Marktic\Pricing\PriceAdjustments\Calculator\ReductionCalculator;
 use Marktic\Pricing\PriceAdjustments\Contracts\PriceAdjustment as PriceAdjustmentContract;
 use Marktic\Pricing\PriceAdjustments\Presentation\Presenter;
 use Marktic\Pricing\Saleable\Contracts\SaleableInterface;
+use Nip\Records\Record;
 
+/**
+ * @method Record getPricingTrigger
+ */
 trait PriceAdjustmentTrait
 {
     use RecordHasSaleable;
@@ -43,12 +47,16 @@ trait PriceAdjustmentTrait
      */
     public function getLabel(): ?string
     {
-        return $this->label ?? $this->generateLabel();
+        if (empty($this->label)) {
+            $this->label = $this->generateLabel();
+        }
+
+        return $this->label;
     }
 
     protected function generateLabel(): ?string
     {
-        return null;
+        return $this->getPricingTrigger()->getName();
     }
 
     /**
@@ -83,7 +91,7 @@ trait PriceAdjustmentTrait
 
     public function adjustedPrice($currency = null): float
     {
-        $price = $this->getSealablePrice($currency);
+        $price = $this->getSaleablePrice($currency);
         if ($this->getType() === PriceAdjustmentContract::TYPE_DISCOUNT) {
             $price = $price - $this->getAdjustableAmount($currency);
         }
@@ -129,16 +137,16 @@ trait PriceAdjustmentTrait
             'amount',
             $currency,
             function () use ($currency) {
-                return $this->calculateReductionFor($this->getSealablePrice($currency));
+                return $this->calculateReductionFor($this->getSaleablePrice($currency));
             }
         );
     }
 
-    protected function getSealablePrice($currency = null): float
+    protected function getSaleablePrice($currency = null): float
     {
         $currency = $currency ?? $this->getCurrencyCode();
 
-        return $this->getSealable()->priceBeforeAdjustments($currency);
+        return $this->getSaleable()->priceBeforeAdjustments($currency);
     }
 
     /**

@@ -53,7 +53,7 @@ trait RecordHasConfiguration
         $this->setPropertyValue('configuration', $configuration);
     }
 
-    protected function getCurrencyCode(): ?string
+    public function getCurrencyCode(): ?string
     {
         if ($this->hasAttribute('currency_code')) {
             return $this->getPropertyValue('currency_code');

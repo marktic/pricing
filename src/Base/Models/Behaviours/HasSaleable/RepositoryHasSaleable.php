@@ -20,9 +20,9 @@ trait RepositoryHasSaleable
 
     protected function initRelationsPricingSaleable()
     {
-        $this->morphMany(
+        $this->morphTo(
             'Saleable',
-            ['class' => get_class(PricingModels::adjustments()), 'morphPrefix' => 'saleable', 'morphTypeField' => 'saleable']
+            ['morphPrefix' => 'saleable']
         );
     }
 }

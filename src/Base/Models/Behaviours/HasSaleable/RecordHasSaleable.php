@@ -20,8 +20,8 @@ trait RecordHasSaleable
         return $this->saleable_id;
     }
 
-    public function getSaleable(): ?SaleableInterface
+    public function getSaleable()
     {
-        return $this->getManager()->getRelation('Saleable')->getResults();
+        return $this->getRelation('Saleable')->getResults();
     }
 }

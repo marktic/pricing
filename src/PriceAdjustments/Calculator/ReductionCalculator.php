@@ -21,6 +21,13 @@ class ReductionCalculator
         $this->modification = $modification;
     }
 
+    /**
+     * @param $price
+     * @param PriceAdjustment $adjustment
+     * @param $currency
+     * @return float|int
+     * @throws Exception
+     */
     public static function for($price, $adjustment, $currency = null)
     {
         $calculator = new static($adjustment->getValue($currency), $adjustment->getModification());

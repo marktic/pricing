@@ -3,6 +3,7 @@
 namespace Marktic\Pricing\PriceAdjustments\Presentation;
 
 use ByTIC\Money\Money;
+use Marktic\Pricing\Currencies\CurrencyCode;
 use Marktic\Pricing\PriceAdjustments\Models\PriceAdjustment;
 
 class Presenter
@@ -36,6 +37,23 @@ class Presenter
         return '+';
     }
 
+    public function valueFormatted($currency = null): string
+    {
+        $currency = $this->currency($currency);
+        $value = $this->adjustment->getValue($currency);
+
+        $return = $this->reductionSign().' ';
+        if ($this->adjustment->getModification() === PriceAdjustment::MODIFICATION_PERCENTAGE) {
+            $return .= $value.'%';
+        }
+
+        if ($this->adjustment->getModification() === PriceAdjustment::MODIFICATION_AMOUNT) {
+            $return .= \ByTIC\Money\Utility\Money::fromFloat($value, $currency)->formatBy('html');
+        }
+
+        return $return;
+    }
+
     public function reductionFormatted($currency = null): string
     {
         $currency = $this->currency($currency);
@@ -52,6 +70,6 @@ class Presenter
 
     protected function currency($currency = null)
     {
-        return $currency ?? $this->adjustment->getCurrencyCode();
+        return CurrencyCode::for($currency, $this->adjustment->getCurrencyCode());
     }
 }
