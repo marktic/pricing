@@ -1,0 +1,22 @@
+<?php
+
+namespace Marktic\Pricing\Bundle\Controllers\Admin;
+
+use ByTIC\Controllers\Behaviors\CrudModels;
+use Marktic\Pricing\PriceAdjustments\Models\PriceAdjustment;
+
+trait MktPricingAdjustmentsControllerTrait
+{
+    use AbstractControllerTrait;
+    use CrudModels;
+
+    /**
+     * @param PriceAdjustment $item
+     */
+    protected function checkItemAccess($item)
+    {
+        $saleable = $item->getSaleable();
+
+        $this->checkAndSetForeignModelInRequest($saleable);
+    }
+}
