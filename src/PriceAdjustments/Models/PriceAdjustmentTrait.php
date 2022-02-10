@@ -5,6 +5,7 @@ namespace Marktic\Pricing\PriceAdjustments\Models;
 use ByTIC\Money\Money;
 use Marktic\Pricing\Base\Models\Behaviours\HasSaleable\RecordHasSaleable;
 use Marktic\Pricing\Base\Models\Behaviours\HasConfiguration\RecordHasConfiguration;
+use Marktic\Pricing\Currencies\CurrencyCode;
 use Marktic\Pricing\PriceAdjustments\Calculator\ReductionCalculator;
 use Marktic\Pricing\PriceAdjustments\Contracts\PriceAdjustment as PriceAdjustmentContract;
 use Marktic\Pricing\PriceAdjustments\Presentation\Presenter;
@@ -67,12 +68,12 @@ trait PriceAdjustmentTrait
         return $this->getConfigWithCurrency('value', $currency, $this->getPropertyRaw('value'));
     }
 
-    public function modifyAmount(): self
+    public function modifiesAmount(): self
     {
         return $this->withModification(PriceAdjustmentContract::MODIFICATION_AMOUNT);
     }
 
-    public function modifyPercentage(): self
+    public function modifiesPercentage(): self
     {
         return $this->withModification(PriceAdjustmentContract::MODIFICATION_PERCENTAGE);
     }
@@ -89,9 +90,9 @@ trait PriceAdjustmentTrait
         return $this->modification;
     }
 
-    public function adjustedPrice($currency = null): float
+    public function adjustedPrice($price = null, $currency = null): float
     {
-        $price = $this->getSaleablePrice($currency);
+        $price = $price ?? $this->getSaleablePrice($currency);
         if ($this->getType() === PriceAdjustmentContract::TYPE_DISCOUNT) {
             $price = $price - $this->getAdjustableAmount($currency);
         }
@@ -131,7 +132,7 @@ trait PriceAdjustmentTrait
      */
     public function getAdjustableAmount($currency = null): float
     {
-        $currency = $currency ?? $this->getCurrencyCode();
+        $currency = CurrencyCode::for($currency, $this->getCurrencyCode());
 
         return $this->checkConfigWithCurrencyCheck(
             'amount',
@@ -144,7 +145,7 @@ trait PriceAdjustmentTrait
 
     protected function getSaleablePrice($currency = null): float
     {
-        $currency = $currency ?? $this->getCurrencyCode();
+        $currency = CurrencyCode::for($currency, $this->getCurrencyCode());
 
         return $this->getSaleable()->priceBeforeAdjustments($currency);
     }
