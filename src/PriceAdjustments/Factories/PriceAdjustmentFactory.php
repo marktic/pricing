@@ -5,6 +5,7 @@ namespace Marktic\Pricing\PriceAdjustments\Factories;
 use Marktic\Pricing\PriceAdjustments\Contracts\PriceAdjustment as PriceAdjustmentContract;
 use Marktic\Pricing\PriceAdjustments\Models\PriceAdjustment;
 use Marktic\Pricing\PriceAdjustments\Models\PriceAdjustments;
+use Marktic\Pricing\Saleable\Contracts\SaleableInterface;
 use Marktic\Pricing\Utility\PricingModels;
 
 class PriceAdjustmentFactory
@@ -28,7 +29,13 @@ class PriceAdjustmentFactory
         $this->priceAdjustment = $this->repository->getNew();
     }
 
-    public static function create($data, $repository = null): self
+    public static function discount($data = [], $repository = null): self
+    {
+        $data['type'] = PriceAdjustmentContract::TYPE_DISCOUNT;
+        return static::create($data, $repository);
+    }
+
+    public static function create($data = [], $repository = null): self
     {
         $factory = new static($repository);
 
@@ -38,6 +45,14 @@ class PriceAdjustmentFactory
     public function withData(array $data): self
     {
         $this->priceAdjustment->fill($data);
+
+        return $this;
+    }
+
+    public function withSaleable(SaleableInterface $saleable): self
+    {
+        $this->priceAdjustment->populateWithSaleable($saleable);
+
         return $this;
     }
 

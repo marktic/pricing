@@ -24,4 +24,10 @@ trait RecordHasSaleable
     {
         return $this->getRelation('Saleable')->getResults();
     }
+
+    public function populateWithSaleable(SaleableInterface $saleable)
+    {
+        $this->saleable_type = $saleable->getManager()->getMorphName();
+        $this->saleable_id = $saleable->getId();
+    }
 }
