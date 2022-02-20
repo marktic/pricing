@@ -6,11 +6,12 @@ use Marktic\Pricing\Base\Models\Behaviours\HasSaleable\RepositoryHasSaleable;
 use Marktic\Pricing\PriceAdjustments\Subscribers\OnDeletingSubscriber;
 use Marktic\Pricing\Utility\PackageConfig;
 use Marktic\Pricing\Utility\PricingModels;
-use Nip\Records\EventManager\Events\Event;
+use Marktic\Pricing\Base\Models\Behaviours\Timestampable\TimestampableManagerTrait;
 
 trait PriceAdjustmentsTrait
 {
     use RepositoryHasSaleable;
+    use TimestampableManagerTrait;
 
     protected function bootPriceAdjustmentsTrait()
     {

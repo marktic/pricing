@@ -4,5 +4,7 @@ namespace Marktic\Pricing\Saleable\Contracts;
 
 interface SaleableInterface
 {
-    public function priceBeforeAdjustments($currency = null) : float;
+    public function getCurrencyCode(): ?string;
+
+    public function priceBeforeAdjustments($currency = null): float;
 }

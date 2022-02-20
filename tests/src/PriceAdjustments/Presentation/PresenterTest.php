@@ -14,7 +14,7 @@ class PresenterTest extends AbstractTest
         /** @var PriceAdjustment|Mockery\Mock $adjustment */
         $adjustment = Mockery::mock(PriceAdjustment::class)->shouldAllowMockingProtectedMethods()->makePartial();
         $adjustment->__construct();
-        $adjustment->shouldReceive('getSealablePrice')->andReturn(200);
+        $adjustment->shouldReceive('getSaleablePrice')->andReturn(200);
         $adjustment->fill([
             'value' => 10,
             'currency_code' => 'RON',

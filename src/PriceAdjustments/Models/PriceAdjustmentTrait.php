@@ -5,11 +5,11 @@ namespace Marktic\Pricing\PriceAdjustments\Models;
 use ByTIC\Money\Money;
 use Marktic\Pricing\Base\Models\Behaviours\HasSaleable\RecordHasSaleable;
 use Marktic\Pricing\Base\Models\Behaviours\HasConfiguration\RecordHasConfiguration;
+use Marktic\Pricing\Base\Models\Behaviours\Timestampable\TimestampableTrait;
 use Marktic\Pricing\Currencies\CurrencyCode;
 use Marktic\Pricing\PriceAdjustments\Calculator\ReductionCalculator;
 use Marktic\Pricing\PriceAdjustments\Contracts\PriceAdjustment as PriceAdjustmentContract;
 use Marktic\Pricing\PriceAdjustments\Presentation\Presenter;
-use Marktic\Pricing\Saleable\Contracts\SaleableInterface;
 use Nip\Records\Record;
 
 /**
@@ -17,6 +17,7 @@ use Nip\Records\Record;
  */
 trait PriceAdjustmentTrait
 {
+    use TimestampableTrait;
     use RecordHasSaleable;
     use RecordHasConfiguration;
 
