@@ -55,11 +55,7 @@ trait RecordHasConfiguration
 
     public function getCurrencyCode(): ?string
     {
-        if ($this->hasAttribute('currency_code')) {
-            return $this->getPropertyValue('currency_code');
-        }
-
-        return null;
+        return $this->getPropertyValue('currency_code');
     }
 
     protected function bootRecordHasConfiguration()

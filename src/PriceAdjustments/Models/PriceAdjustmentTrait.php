@@ -66,7 +66,7 @@ trait PriceAdjustmentTrait
      */
     public function getValue($currency = null): ?float
     {
-        return $this->getConfigWithCurrency('value', $currency, $this->getPropertyRaw('value'));
+        return $this->getConfigWithCurrency('amount', $currency, $this->getPropertyRaw('value'));
     }
 
     public function modifiesAmount(): self
