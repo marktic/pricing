@@ -18,7 +18,7 @@ class PriceAdjustmentTraitTest extends AbstractTest
         $priceAdjustment->fill([
             'currency_code' => 'RON',
             'value' => 0.5,
-            'configuration' => '{"amount_c": {"EUR": "1.23", "RON": "2.34"}}'
+            'configuration' => '{"value_c": {"EUR": "1.23", "RON": "2.34"}}'
         ]);
 
         $this->assertEquals($value, $priceAdjustment->getValue($currency));
