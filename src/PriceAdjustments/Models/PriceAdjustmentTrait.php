@@ -103,7 +103,7 @@ trait PriceAdjustmentTrait
 
     public function isFullDiscount(): bool
     {
-        return $this->adjustedPrice() === 0;
+        return round($this->adjustedPrice(),1) === 0.0;
     }
 
     public function present(): Presenter
