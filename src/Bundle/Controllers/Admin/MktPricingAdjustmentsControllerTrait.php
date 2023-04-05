@@ -18,5 +18,7 @@ trait MktPricingAdjustmentsControllerTrait
         $saleable = $item->getSaleable();
 
         $this->checkAndSetForeignModelInRequest($saleable);
+        $this->setAfterUrl('after-delete', $saleable->getURL());
+        $this->setAfterFlashName('after-delete', $saleable->getManager()->getController());
     }
 }

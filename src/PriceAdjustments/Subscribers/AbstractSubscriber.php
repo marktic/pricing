@@ -22,7 +22,7 @@ abstract class AbstractSubscriber
      */
     protected function notifySaleable($item, $event)
     {
-        $this->notifySubscriber($item->getSalesable(), $item, $event);
+        $this->notifySubscriber($item->getSaleable(), $item, $event);
     }
 
     /**
