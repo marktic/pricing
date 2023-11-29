@@ -20,6 +20,11 @@ trait RecordHasSaleable
         return $this->saleable_id;
     }
 
+    public function setSaleableId($id)
+    {
+        $this->saleable_id = intval($id);
+    }
+
     public function getSaleable()
     {
         return $this->getRelation('Saleable')->getResults();
