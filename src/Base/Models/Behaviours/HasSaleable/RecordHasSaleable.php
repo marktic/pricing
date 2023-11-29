@@ -32,7 +32,7 @@ trait RecordHasSaleable
 
     public function populateWithSaleable(SaleableInterface $saleable)
     {
-        $this->saleable_id = $saleable->getId();
+        $this->setSaleableId($saleable->getId());
         $this->saleable_type = $saleable->getManager()->getMorphName();
     }
 }
