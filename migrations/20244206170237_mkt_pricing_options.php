@@ -34,7 +34,7 @@ final class MktPricingOptions extends AbstractMigration
         $table
             ->addIndex(['saleable_type'])
             ->addIndex(['saleable_id'])
-            ->addIndex(['currency_code'])
+            ->addIndex(['saleable_type','saleable_id','name'], ['unique' => true, 'name' => 'mkt_pricing_options_unique'])
             ->save();
     }
 }
