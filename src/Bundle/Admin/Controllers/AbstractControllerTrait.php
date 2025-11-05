@@ -1,6 +1,6 @@
 <?php
 
-namespace Marktic\Pricing\Bundle\Controllers\Admin;
+namespace Marktic\Pricing\Bundle\Admin\Controllers;
 
 use Nip\Controllers\Response\ResponsePayload;
 use Nip\View\View;

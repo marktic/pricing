@@ -1,6 +1,6 @@
 <?php
 
-namespace Marktic\Pricing\Bundle\Controllers\Admin;
+namespace Marktic\Pricing\Bundle\Admin\Controllers;
 
 use ByTIC\Controllers\Behaviors\CrudModels;
 use Marktic\Pricing\PriceAdjustments\Models\PriceAdjustment;

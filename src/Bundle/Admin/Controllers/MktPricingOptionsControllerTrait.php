@@ -2,16 +2,18 @@
 
 namespace Marktic\Pricing\Bundle\Controllers\Admin;
 
-use ByTIC\Controllers\Behaviors\CrudModels;
-use Marktic\Pricing\PriceAdjustments\Models\PriceAdjustment;
+use Marktic\Pricing\Bundle\Admin\Controllers\AbstractControllerTrait;
 use Marktic\Pricing\PriceOptions\Actions\FindForSaleable;
 
-trait MktPricingSaleableOptionsControllerTrait
+trait MktPricingOptionsControllerTrait
 {
     use AbstractControllerTrait;
 
-    public function optionsCard($saleable): void
+    public function saleable(): void
     {
+        $saleableName = $this->getRequest()->get('saleable_type');
+        $saleable = $this->checkForeignModelFromRequest($saleableName, ['saleable_id', 'id']);
+
         $options = FindForSaleable::for($saleable)->fetch();
 
         $this->payload()->with([

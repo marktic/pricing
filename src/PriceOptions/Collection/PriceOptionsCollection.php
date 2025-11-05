@@ -9,12 +9,24 @@ class PriceOptionsCollection extends RecordCollection
 {
     protected $_indexKey = 'name';
 
-    public const KEY_CURRENCY = 'currency';
+    public const KEY_CURRENCY_DEFAULT = 'currency.default';
 
-    public function getCurrencyCode()
+    public const KEY_CURRENCY_ACTIVE = 'currency.active';
+
+    public function getCurrencyDefaultCode()
     {
-        $option = $this->get(self::KEY_CURRENCY);
+        return $this->getValue(self::KEY_CURRENCY_DEFAULT, PackageConfig::defaultCurrencyCode());
+    }
+
+    public function getCurrencyActive()
+    {
+        return $this->getValue(self::KEY_CURRENCY_ACTIVE, [$this->getCurrencyDefaultCode()]);
+    }
+
+    protected function getValue($key, $default = null)
+    {
+        $option = $this->get($key);
         $value = $option ? $option->getValue() : null;
-        return $value ? $value : PackageConfig::defaultCurrencyCode();
+        return $value ?: $default;
     }
 }
