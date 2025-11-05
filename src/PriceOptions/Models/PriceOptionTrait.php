@@ -17,12 +17,16 @@ trait PriceOptionTrait
     use TimestampableTrait;
     use RecordHasSaleable;
 
+    public function getName(): string
+    {
+        return $this->getPropertyRaw('name');
+    }
+
     /**
      * @return float|null
      */
-    public function getValue($currency = null): ?float
+    public function getValue(): string
     {
-        return $this->getConfigWithCurrency('value', $currency, $this->getPropertyRaw('value'));
+        return $this->getPropertyRaw('value');
     }
-
 }

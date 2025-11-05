@@ -21,7 +21,7 @@ final class MktPricingAmounts extends AbstractMigration
             ->addColumn('saleable_type', 'string', ['null' => true])
             ->addColumn('saleable_id', 'integer', ['null' => true])
             ->addColumn('value', 'integer', ['null' => false])
-            ->addColumn('currency_code', 'string', ['limit' => '3', 'null' => false])
+            ->addColumn('currency_code', 'string', ['limit' => 3, 'null' => false])
             ->addColumn('configuration', 'json', ['null' => true])
             ->addColumn('updated_at', 'timestamp', [
                 'default' => 'CURRENT_TIMESTAMP',
