@@ -4,6 +4,7 @@ namespace Marktic\Pricing\Utility;
 
 use ByTIC\PackageBase\Utility\ModelFinder;
 use Marktic\Pricing\PriceAdjustments\Models\PriceAdjustments;
+use Marktic\Pricing\PriceAmounts\Models\PriceAmounts;
 use Marktic\Pricing\PriceOptions\Models\PriceOptions;
 use Marktic\Pricing\PricingServiceProvider;
 use Nip\Records\RecordManager;
@@ -30,10 +31,13 @@ class PricingModels extends ModelFinder
 
     public static function priceAmounts()
     {
-
-        return static::getModels(self::PRICING_ADJUSTMENTS, PriceAdjustments::class);
+        return static::getModels(self::PRICING_AMOUNTS, PriceAmounts::class);
     }
 
+    public static function priceAmountsClass()
+    {
+        return PackageConfig::modelsName(self::PRICING_AMOUNTS);
+    }
 
     public static function pricingOptions()
     {

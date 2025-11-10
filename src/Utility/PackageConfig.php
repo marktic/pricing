@@ -28,6 +28,11 @@ class PackageConfig extends \ByTIC\PackageBase\Utility\PackageConfig
         return static::instance()->get('tables.' . $name, $default);
     }
 
+    public static function modelsName($name, $default = null)
+    {
+        return static::instance()->get('models.' . $name, $default);
+    }
+
     public static function defaultCurrencyCode($default = null)
     {
         $default = $default ?: static::DEFAULT_CURRENCY;

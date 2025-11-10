@@ -4,8 +4,8 @@ namespace Marktic\Pricing\Bundle\Admin\Forms\SaleableHasAmounts;
 
 use Marktic\Pricing\PriceAmounts\Actions\SaveAmountsForSaleable;
 use Marktic\Pricing\PriceAmounts\ModelsRelated\SaleableHasAmountsRecordTrait;
-use Marktic\Pricing\PriceAmounts\Actions\FindForSaleable;
 use Marktic\Pricing\PriceOptions\Collection\PriceOptionsCollection;
+use Nip_Form_Element_Money;
 
 /**
  * @method SaleableHasAmountsRecordTrait getModel()
@@ -25,9 +25,12 @@ trait SaleableHasAmountsFormTrait
 
     protected function initSaleableAmountField($currencyCode)
     {
-        $name = 'amounts['.$currencyCode.']';
-        $this->addMoney($name, translator()->trans('value').' ('.$currencyCode.')', true);
-        $this->getElement($name)->setOption('currency', $currencyCode);
+        $this->addMoney(
+            $this->getAmountElementKey($currencyCode),
+            translator()->trans('value').' ('.$currencyCode.')',
+            true
+        );
+        $this->getAmountElement($currencyCode)->setOption('currency', $currencyCode);
     }
 
     protected function getDataFromModel()
@@ -37,8 +40,14 @@ trait SaleableHasAmountsFormTrait
         $this->getDataFromModelSaleableAmounts();
     }
 
-    protected function getDataFromModelSaleableAmounts()
+    protected function getDataFromModelSaleableAmounts(): void
     {
+        $currencies = $this->getSaleableCurrencies();
+        $amountMulticurrency = $this->getModel()->getPriceAmountsMultiCurrency();
+        foreach ($currencies as $currencyCode) {
+            $element = $this->getAmountElement($currencyCode);
+            $element->setValue($amountMulticurrency->getPrice($currencyCode)->getAmount());
+        }
     }
 
     protected function getDataFromRequest($request)
@@ -80,6 +89,20 @@ trait SaleableHasAmountsFormTrait
     }
 
     /**
+     * @param $currencyCode
+     * @return Nip_Form_Element_Money
+     */
+    protected function getAmountElement($currencyCode)
+    {
+        return $this->getElement($this->getAmountElementKey($currencyCode));
+    }
+
+    protected function getAmountElementKey($currencyCode)
+    {
+        return 'amounts['.$currencyCode.']';
+    }
+
+    /**
      * @return PriceOptionsCollection|null
      */
     protected function getSaleableOptions()
@@ -92,7 +115,7 @@ trait SaleableHasAmountsFormTrait
         }
 
         $key = is_object($root)
-            ? get_class($root) . ':' . (property_exists($root, 'id') ? $root->id : spl_object_hash($root))
+            ? get_class($root).':'.(property_exists($root, 'id') ? $root->id : spl_object_hash($root))
             : (string)$root;
 
         if (!isset($cache[$key])) {

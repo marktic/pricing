@@ -36,6 +36,6 @@ class FindForSaleable extends Action
     }
     protected function generateRepository(): RecordManager
     {
-        return PricingModels::pricingOptions();
+        return PricingModels::priceAmounts();
     }
 }

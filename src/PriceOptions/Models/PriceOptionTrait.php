@@ -17,7 +17,7 @@ trait PriceOptionTrait
     use TimestampableTrait;
     use RecordHasSaleable;
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->getPropertyRaw('name');
     }
@@ -25,7 +25,7 @@ trait PriceOptionTrait
     /**
      * @return float|null
      */
-    public function getValue(): string
+    public function getValue(): ?string
     {
         return $this->getPropertyRaw('value');
     }

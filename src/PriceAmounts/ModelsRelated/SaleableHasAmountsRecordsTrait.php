@@ -2,6 +2,8 @@
 
 namespace Marktic\Pricing\PriceAmounts\ModelsRelated;
 
+use Marktic\Pricing\Utility\PricingModels;
+
 trait SaleableHasAmountsRecordsTrait
 {
 
@@ -20,7 +22,7 @@ trait SaleableHasAmountsRecordsTrait
     {
         $this->morphMany(
             'PriceAmounts',
-            ['morphPrefix' => 'saleable']
+            ['morphPrefix' => 'saleable', 'class' => PricingModels::priceAmountsClass()]
         );
     }
 }

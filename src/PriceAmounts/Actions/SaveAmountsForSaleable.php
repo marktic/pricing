@@ -3,7 +3,6 @@
 namespace Marktic\Pricing\PriceAmounts\Actions;
 
 use Bytic\Actions\Action;
-use Bytic\Actions\Behaviours\HasAttributes;
 use Bytic\Actions\Behaviours\HasSubject\HasSubject;
 use ByTIC\Money\Money;
 use Marktic\Pricing\PriceAmounts\Models\PriceAmount;
@@ -59,6 +58,7 @@ class SaveAmountsForSaleable extends Action
     {
         if ($this->amountRecord === null) {
             $this->amountRecord = FindForSaleable::for($this->getSubject())
+                ->orCreate()
                 ->fetch();
         }
 

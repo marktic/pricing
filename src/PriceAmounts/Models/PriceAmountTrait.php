@@ -18,8 +18,6 @@ trait PriceAmountTrait
     use RecordHasSaleable;
     use RecordHasConfiguration;
 
-    protected ?int $value;
-
     protected $priceAmounts = null;
 
     /**
