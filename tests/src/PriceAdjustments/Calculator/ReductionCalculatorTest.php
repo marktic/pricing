@@ -5,9 +5,9 @@ namespace Marktic\Pricing\Tests\PriceAdjustments\Calculator;
 use Marktic\Pricing\PriceAdjustments\Calculator\ReductionCalculator;
 use Marktic\Pricing\PriceAdjustments\Contracts\PriceAdjustment as PriceAdjustmentContract;
 use Marktic\Pricing\PriceAdjustments\Models\PriceAdjustment;
-use Marktic\Pricing\Tests\AbstractTest;
+use Marktic\Pricing\Tests\TestCase;
 
-class ReductionCalculatorTest extends AbstractTest
+class ReductionCalculatorTest extends TestCase
 {
     /**
      * @dataProvider data_for
@@ -23,7 +23,7 @@ class ReductionCalculatorTest extends AbstractTest
         self::assertEquals($expected, ReductionCalculator::for(100, $adjustment));
     }
 
-    public function data_for()
+    public static function data_for()
     {
         return [
             [10, PriceAdjustmentContract::MODIFICATION_FIXED, 90],

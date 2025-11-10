@@ -2,7 +2,6 @@
 
 namespace Marktic\Pricing\Tests;
 
-use Bytic\Phpqa\PHPUnit\TestCase;
 use Marktic\Pricing\PricingServiceProvider;
 use Mockery;
 use Nip\Config\Config;
@@ -11,7 +10,7 @@ use Nip\Container\Utility\Container;
 /**
  * Class AbstractTest
  */
-abstract class AbstractTest extends TestCase
+abstract class TestCase extends \Bytic\Phpqa\PHPUnit\TestCase
 {
 
     protected function loadConfig($data = [])

@@ -4,10 +4,10 @@ namespace Marktic\Pricing\Tests\PriceAdjustments\Presentation;
 
 use Marktic\Pricing\PriceAdjustments\Models\PriceAdjustment;
 use Marktic\Pricing\PriceAdjustments\Presentation\Presenter;
-use Marktic\Pricing\Tests\AbstractTest;
+use Marktic\Pricing\Tests\TestCase;
 use Mockery;
 
-class PresenterTest extends AbstractTest
+class PresenterTest extends TestCase
 {
     public function test_reductionFormatted()
     {

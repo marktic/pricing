@@ -22,7 +22,7 @@ class FindForSaleable extends Action
         return [
             'where' => [
                 ['saleable_type = ?', $this->getSubject()->getManager()->getMorphName()],
-                ['saleable_id = ?', $this->getSubject()->getId()],
+                ['saleable_id = ?', $this->getSubject()->id],
             ],
         ];
     }

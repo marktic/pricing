@@ -3,9 +3,9 @@
 namespace Marktic\Pricing\Tests\Base\Models\Behaviours\HasSaleable;
 
 use Marktic\Pricing\PriceAdjustments\Models\PriceAdjustment;
-use Marktic\Pricing\Tests\AbstractTest;
+use Marktic\Pricing\Tests\TestCase;
 
-class RecordHasSaleableTest extends AbstractTest
+class RecordHasSaleableTest extends TestCase
 {
     /**
      * @param $data
@@ -23,7 +23,7 @@ class RecordHasSaleableTest extends AbstractTest
         $this->assertEquals($saleableType, $record->getSaleableType());
     }
 
-    public function data_fill()
+    public static function data_fill()
     {
         return [
             [['saleable_id' => 1, 'saleable_type' => 'test'] , 1, 'test'],

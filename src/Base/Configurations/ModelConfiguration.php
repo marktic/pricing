@@ -39,6 +39,6 @@ class ModelConfiguration extends Metadata
 
     protected function encodeCurrencyKey($name, $currency): string
     {
-        return $name . '_c.' . $currency;
+        return $name . '_c' . ($currency ? '.'. $currency : null);
     }
 }

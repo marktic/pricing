@@ -3,7 +3,7 @@
 namespace Marktic\Pricing\Tests\Utility;
 
 use Marktic\Pricing\PriceAdjustments\Models\PriceAdjustments;
-use Marktic\Pricing\Tests\AbstractTest;
+use Marktic\Pricing\Tests\TestCase;
 use Marktic\Pricing\Utility\PricingModels;
 use Nip\Records\Locator\ModelLocator;
 
@@ -11,7 +11,7 @@ use Nip\Records\Locator\ModelLocator;
  * Class PromotionSeviceProvider
  * @package ByTIC\NotifierBuilder
  */
-class PricingModelsTest extends AbstractTest
+class PricingModelsTest extends TestCase
 {
     /**
      * @test

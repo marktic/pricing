@@ -3,9 +3,9 @@
 namespace Marktic\Pricing\Tests\PriceAdjustments\Models;
 
 use Marktic\Pricing\PriceAdjustments\Models\PriceAdjustment;
-use Marktic\Pricing\Tests\AbstractTest;
+use Marktic\Pricing\Tests\TestCase;
 
-class PriceAdjustmentTraitTest extends AbstractTest
+class PriceAdjustmentTraitTest extends TestCase
 {
     /**
      * @param $currency
@@ -24,7 +24,7 @@ class PriceAdjustmentTraitTest extends AbstractTest
         $this->assertEquals($value, $priceAdjustment->getValue($currency));
     }
 
-    public function data_getValue()
+    public static function data_getValue(): array
     {
         return [
             [null, 2.34],

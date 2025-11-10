@@ -21,6 +21,7 @@ trait SaleableHasAmountsFormTrait
     {
         $name = 'amounts['.$currencyCode.']';
         $this->addMoney($name, translator()->trans('value').' ('.$currencyCode.')', true);
+        $this->getElement($name)->setOption('currency', $currencyCode);
     }
 
     protected function getDataFromModel()
@@ -34,8 +35,25 @@ trait SaleableHasAmountsFormTrait
     {
     }
 
+    protected function getDataFromRequest($request)
+    {
+        parent::getDataFromRequest($request);
+        $this->validateSaleableAmountsFields();
+    }
+
     protected function validateSaleableAmountsFields()
     {
+    }
+
+    public function saveModel()
+    {
+        parent::saveModel();
+        $this->saveModelSaleableAmounts();
+    }
+
+    protected function saveModelSaleableAmounts()
+    {
+
     }
 
     protected function getSaleableCurrencies()
