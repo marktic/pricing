@@ -3,6 +3,7 @@
 namespace Marktic\Pricing\PriceAmounts\Dto;
 
 use Marktic\Pricing\PriceAmounts\Models\PriceAmount;
+use Nip\Records\Record;
 
 class PriceAmountsMultiCurrency
 {
@@ -16,11 +17,13 @@ class PriceAmountsMultiCurrency
      */
     protected array $priceAmounts = [];
 
-    public static function fromRecord($record): self
+    public static function fromRecord(Record|null $record): self
     {
         $dto = new self();
         $dto->record = $record;
-        $dto->createAmountsFromRecord($record);
+        if ($record) {
+            $dto->createAmountsFromRecord($record);
+        }
 
         return $dto;
     }
