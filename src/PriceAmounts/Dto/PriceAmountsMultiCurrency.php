@@ -28,6 +28,11 @@ class PriceAmountsMultiCurrency
         return $dto;
     }
 
+    public function getCurrencies(): array
+    {
+        return $this->record->getCurrencies();
+    }
+
     public function getPrice($currency = null): ?PriceAmountDto
     {
         $currency = $this->guardCurrency($currency);
