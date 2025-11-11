@@ -10,27 +10,27 @@ class PriceAmountsMultiCurrency
     /**
      * @var PriceAmount
      */
-    protected $record;
+    protected $record = null;
 
     /**
      * @var array|PriceAmountDto[]
      */
     protected array $priceAmounts = [];
 
-    public static function fromRecord(Record|null $record): self
+    public static function fromRecord(Record|null|false $record): self
     {
         $dto = new self();
-        $dto->record = $record;
         if ($record) {
+            $dto->record = $record;
             $dto->createAmountsFromRecord($record);
         }
 
         return $dto;
     }
 
-    public function getCurrencies(): array
+    public function getCurrencies(): array|null
     {
-        return $this->record->getCurrencies();
+        return $this->record?->getCurrencies();
     }
 
     public function getPrice($currency = null): ?PriceAmountDto

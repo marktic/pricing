@@ -31,7 +31,6 @@ class PriceAmountDto
         return $this->amount->$name(...$arguments);
     }
 
-
     public function getAmount(): Money
     {
         return $this->amount;
@@ -41,6 +40,11 @@ class PriceAmountDto
     {
         $this->amount = $amount;
         return $this;
+    }
+
+    public function getAmountFormatted($format = null)
+    {
+        return $this->amount->formatBy($format ?? 'html');
     }
     
     public function isDefault(): bool
