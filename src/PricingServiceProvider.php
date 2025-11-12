@@ -20,6 +20,10 @@ class PricingServiceProvider extends BaseBootableServiceProvider
         parent::register();
     }
 
+    protected function translationsPath(): ?string
+    {
+        return dirname(__DIR__) . '/resources/lang';
+    }
     public function migrations(): ?string
     {
         if (PackageConfig::shouldRunMigrations()) {
