@@ -5,6 +5,7 @@ namespace Marktic\Pricing\PriceAmounts\Models;
 use Marktic\Pricing\Base\Models\Behaviours\HasSaleable\RecordHasSaleable;
 use Marktic\Pricing\Base\Models\Behaviours\HasConfiguration\RecordHasConfiguration;
 use Marktic\Pricing\Base\Models\Behaviours\Timestampable\TimestampableTrait;
+use Marktic\Pricing\PriceAmounts\Actions\SaveAmountsForSaleable;
 use Marktic\Pricing\PriceAmounts\Dto\PriceAmountDto;
 use Marktic\Pricing\PriceAmounts\Dto\PriceAmountsMultiCurrency;
 use Nip\Records\Record;
@@ -30,14 +31,15 @@ trait PriceAmountTrait
 
     public function getAmount($currency = null): ?PriceAmountDto
     {
-        return $this->getAmounts()->getPrice($currency);
+        return $this->getAmountsMultiCurrency()->getPrice($currency);
     }
 
-    public function getAmounts()
+    public function getAmountsMultiCurrency()
     {
         if ($this->priceAmounts === null) {
             $this->priceAmounts = PriceAmountsMultiCurrency::fromRecord($this);
         }
+
         return $this->priceAmounts;
     }
 
@@ -49,6 +51,19 @@ trait PriceAmountTrait
         foreach ($additionalCurrencies as $currency => $v) {
             $currencies[$currency] = $currency;
         }
+
         return array_values($currencies);
+    }
+
+    public function duplicateForSaleable($saleableRecord, $currency = null)
+    {
+        return
+            SaveAmountsForSaleable
+                ::withAmounts(
+                    $saleableRecord,
+                    $this->getAmountsMultiCurrency()->getMoneys()
+                )
+                ->withCurrencyCode($currency)
+                ->handle();
     }
 }

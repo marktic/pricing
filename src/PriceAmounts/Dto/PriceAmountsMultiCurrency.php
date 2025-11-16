@@ -16,6 +16,7 @@ class PriceAmountsMultiCurrency
      * @var array|PriceAmountDto[]
      */
     protected array $priceAmounts = [];
+    protected array $moneys = [];
 
     public static function fromRecord(Record|null|false $record): self
     {
@@ -31,6 +32,26 @@ class PriceAmountsMultiCurrency
     public function getCurrencies(): array|null
     {
         return $this->record?->getCurrencies();
+    }
+
+    public function getPriceAmounts(): array
+    {
+        return $this->priceAmounts;
+    }
+
+    public function getMoneys(): array
+    {
+        return $this->moneys;
+    }
+
+    public function getRecord(): ?PriceAmount
+    {
+        return $this->record;
+    }
+
+    public function duplicateForSaleable($saleable, $currency)
+    {
+        return $this->record->duplicateForSaleable($saleable, $currency);
     }
 
     public function getPrice($currency = null): ?PriceAmountDto
@@ -61,16 +82,25 @@ class PriceAmountsMultiCurrency
     {
         $currencyDefault = $this->getDefaultCurrency();
 
-        $this->priceAmounts = [
-            $currencyDefault => PriceAmountDto::fromValues($record->getValue(), $currencyDefault, true),
-        ];
+        $this->addAmount(
+            PriceAmountDto::fromValues($record->getValue(), $currencyDefault, true)
+        );
         $currencies = $record->getCurrencies();
         foreach ($currencies as $currency) {
             if ($currency === $currencyDefault) {
                 continue;
             }
-            $this->priceAmounts[$currency] = PriceAmountDto::fromValues($record->getValue($currency), $currency, false);
-        }
 
+            $this->addAmount(
+                PriceAmountDto::fromValues($record->getValue($currency), $currency, false)
+            );
+        }
+    }
+
+    protected function addAmount(PriceAmountDto $priceAmountDto): void
+    {
+        $currencyCode = $priceAmountDto->getCurrency()->getCode();
+        $this->priceAmounts[$currencyCode] = $priceAmountDto;
+        $this->moneys[$currencyCode] = $priceAmountDto->getAmount();
     }
 }

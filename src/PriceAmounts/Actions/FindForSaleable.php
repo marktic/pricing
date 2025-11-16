@@ -5,12 +5,12 @@ namespace Marktic\Pricing\PriceAmounts\Actions;
 use Bytic\Actions\Action;
 use Bytic\Actions\Behaviours\Entities\FindRecord;
 use Bytic\Actions\Behaviours\HasSubject\HasSubject;
-use Marktic\Pricing\PriceOptions\Collection\PriceOptionsCollection;
+use Marktic\Pricing\PriceAmounts\Models\PriceAmount;
 use Marktic\Pricing\Utility\PricingModels;
 use Nip\Records\AbstractModels\RecordManager;
 
 /**
- * @method PriceOptionsCollection fetch()
+ * @method PriceAmount fetch()
  */
 class FindForSaleable extends Action
 {

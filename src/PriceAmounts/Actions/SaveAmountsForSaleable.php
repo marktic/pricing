@@ -49,6 +49,7 @@ class SaveAmountsForSaleable extends Action
     public function handle()
     {
         $this->saveAmounts();
+        return $this->getAmountRecord();
     }
 
     /**
