@@ -2,6 +2,7 @@
 
 namespace Marktic\Pricing\PriceAmounts\Dto;
 
+use ByTIC\Money\Currencies\Actions\InitCurrency;
 use Marktic\Pricing\PriceAmounts\Models\PriceAmount;
 use Nip\Records\Record;
 
@@ -69,9 +70,10 @@ class PriceAmountsMultiCurrency
         return $this->record?->getCurrencyCode();
     }
 
-    protected function guardCurrency($currency = null)
+    protected function guardCurrency($currency = null): string
     {
-        return $currency ?: $this->getDefaultCurrency();
+        $currency = $currency ?: $this->getDefaultCurrency();
+        return InitCurrency::from($currency)->getCode();
     }
 
     /**
