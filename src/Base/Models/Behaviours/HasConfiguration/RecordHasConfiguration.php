@@ -24,7 +24,7 @@ trait RecordHasConfiguration
     public function checkConfigWithCurrencyCheck($name, $currency = null, $default = null)
     {
         return $this->getConfigWithCurrency(
-            'value',
+            $name,
             $currency,
             function () use ($currency, $default, $name) {
                 $default = value($default);

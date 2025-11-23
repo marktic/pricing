@@ -18,12 +18,13 @@ class PricingServiceProvider extends BaseBootableServiceProvider
 
     protected function translationsPath(): ?string
     {
-        return dirname(__DIR__) . '/resources/lang';
+        return dirname(__DIR__).'/resources/lang';
     }
+
     public function migrations(): ?string
     {
         if (PackageConfig::shouldRunMigrations()) {
-            return dirname(__DIR__) . '/migrations/';
+            return dirname(__DIR__).'/migrations/';
         }
 
         return null;

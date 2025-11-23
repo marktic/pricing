@@ -7,7 +7,7 @@ use Nip\Records\EventManager\Events\Event;
 
 abstract class AbstractSubscriber
 {
-    protected function handle(Event $event)
+    public function handle(Event $event)
     {
         /** @var PriceAdjustment $item */
         $item = $event->getRecord();
