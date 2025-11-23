@@ -15,10 +15,6 @@ class PricingServiceProvider extends BaseBootableServiceProvider
 
     public const SERVICE_RULE_CONDITIONS = 'mkt_pricing.rules.conditions';
 
-    public function register()
-    {
-        parent::register();
-    }
 
     protected function translationsPath(): ?string
     {
@@ -31,42 +27,6 @@ class PricingServiceProvider extends BaseBootableServiceProvider
         }
 
         return null;
-    }
-
-    protected function registerResources()
-    {
-        if (false === $this->getContainer()->has('translator')) {
-            return;
-        }
-        $translator = $this->getContainer()->get('translator');
-        $folder = __DIR__ . '/Bundle/Resources/lang/';
-        $languages = $this->getContainer()->get('translation.languages');
-
-
-        foreach ($languages as $language) {
-            $path = $folder . $language;
-            if (is_dir($path)) {
-                $translator->addResource('php', $path, $language);
-            }
-        }
-    }
-
-    protected function registerCommands()
-    {
-//        $this->commands(
-//        );
-    }
-
-    /**
-     * @return array
-     */
-    public function provides(): array
-    {
-        return array_merge(
-            [
-            ],
-            parent::provides()
-        );
     }
 
 }
