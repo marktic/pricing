@@ -46,7 +46,7 @@ trait SaleableHasAmountsFormTrait
         $amountMulticurrency = $this->getModel()->getPriceAmountsMultiCurrency();
         foreach ($currencies as $currencyCode) {
             $element = $this->getAmountElement($currencyCode);
-            $element->setValue($amountMulticurrency->getPrice($currencyCode)->getAmount());
+            $element->setValue($amountMulticurrency->getPrice($currencyCode)?->getAmount());
         }
     }
 
